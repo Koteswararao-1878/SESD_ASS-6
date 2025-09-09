@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App - Account Factory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .account-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Banking App - Account Factory</h1>
+
+    <button onclick="createAccount('SavingsAccount')">Create Savings Account</button>
+    <button onclick="createAccount('CurrentAccount')">Create Current Account</button>
+    <button onclick="createAccount('LoanAccount')">Create Loan Account</button>
+
+    <div id="output">
+        <h2>Created Accounts</h2>
+    </div>
+
+    <script>
+        // Factory function
+        function AccountFactory() {
+            this.create = function (type) {
+                const id = generateUniqueId();
+                switch (type) {
+                    case 'SavingsAccount':
+                        return { type: 'SavingsAccount', holderName: 'Alice Johnson', balance: 5000, id: id };
+                    case 'CurrentAccount':
+                        return { type: 'CurrentAccount', holderName: 'Bob Williams', balance: 10000, id: id };
+                    case 'LoanAccount':
+                        return { type: 'LoanAccount', holderName: 'Charlie Brown', loanAmount: 20000, id: id };
+                    default:
+                        return null;
+                }
+            };
+        }
+
+        const factory = new AccountFactory();
+
+        function generateUniqueId() {
+            return 'ACC-' + Math.floor(Math.random() * 10000);
+        }
+
+        function createAccount(type) {
+            const account = factory.create(type);
+            displayAccount(account);
+        }
+
+        function displayAccount(account) {
+            const outputDiv = document.getElementById('output');
+            const div = document.createElement('div');
+            div.className = 'account-item';
+
+            let accountInfo = `${account.type} | Holder: ${account.holderName} | ID: ${account.id}`;
+            if (account.type === 'LoanAccount') {
+                accountInfo += ` | Loan Amount: $${account.loanAmount}`;
+            } else {
+                accountInfo += ` | Balance: $${account.balance}`;
+            }
+
+            div.textContent = accountInfo;
+            outputDiv.appendChild(div);
+        }
+    </script>
+</body>
+
+</html>
