@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery App - Factory Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .object-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Food Delivery App - Factory Example</h1>
+
+    <button onclick="createEntity('Customer')">Create Customer</button>
+    <button onclick="createEntity('DeliveryPartner')">Create Delivery Partner</button>
+    <button onclick="createEntity('Restaurant')">Create Restaurant</button>
+
+    <div id="output">
+        <h2>Created Entities</h2>
+    </div>
+
+    <script>
+        // Factory function to create different entities
+        function EntityFactory() {
+            this.create = function (type) {
+                const id = generateUniqueId();
+                switch (type) {
+                    case 'Customer':
+                        return { type: 'Customer', name: 'John Doe', role: 'Customer', id: id };
+                    case 'DeliveryPartner':
+                        return { type: 'DeliveryPartner', name: 'Jane Smith', role: 'Delivery Partner', id: id };
+                    case 'Restaurant':
+                        return { type: 'Restaurant', name: 'Best Pizza', role: 'Restaurant', id: id };
+                    default:
+                        return null;
+                }
+            };
+        }
+
+        const factory = new EntityFactory();
+
+        function generateUniqueId() {
+            return 'ID-' + Math.floor(Math.random() * 10000);
+        }
+
+        function createEntity(type) {
+            const entity = factory.create(type);
+            displayEntity(entity);
+        }
+
+        function displayEntity(entity) {
+            const outputDiv = document.getElementById('output');
+            const div = document.createElement('div');
+            div.className = 'object-item';
+            div.textContent = `${entity.type} | Name: ${entity.name} | Role: ${entity.role} | ID: ${entity.id}`;
+            outputDiv.appendChild(div);
+        }
+    </script>
+</body>
+
+</html>
