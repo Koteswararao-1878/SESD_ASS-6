@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce App - Product Factory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .product-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>E-commerce App - Product Factory</h1>
+
+    <button onclick="createProduct('Electronics')">Create Electronics Product</button>
+    <button onclick="createProduct('Clothing')">Create Clothing Product</button>
+    <button onclick="createProduct('Books')">Create Book Product</button>
+
+    <div id="output">
+        <h2>Created Products</h2>
+    </div>
+
+    <script>
+        // Factory function
+        function ProductFactory() {
+            this.create = function (category) {
+                const id = generateUniqueId();
+                switch (category) {
+                    case 'Electronics':
+                        return { category: 'Electronics', name: 'Smartphone', price: 699, id: id };
+                    case 'Clothing':
+                        return { category: 'Clothing', name: 'T-shirt', price: 29, id: id };
+                    case 'Books':
+                        return { category: 'Books', name: 'Learn JavaScript', price: 19, id: id };
+                    default:
+                        return null;
+                }
+            };
+        }
+
+        const factory = new ProductFactory();
+
+        function generateUniqueId() {
+            return 'PROD-' + Math.floor(Math.random() * 10000);
+        }
+
+        function createProduct(category) {
+            const product = factory.create(category);
+            displayProduct(product);
+        }
+
+        function displayProduct(product) {
+            const outputDiv = document.getElementById('output');
+            const div = document.createElement('div');
+            div.className = 'product-item';
+            div.textContent = `Category: ${product.category} | Name: ${product.name} | Price: $${product.price} | ID: ${product.id}`;
+            outputDiv.appendChild(div);
+        }
+    </script>
+</body>
+
+</html>
