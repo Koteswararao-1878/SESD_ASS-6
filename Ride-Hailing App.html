@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride-Hailing App - Ride Factory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #138496;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .ride-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ride-Hailing App - Ride Type Factory</h1>
+
+    <button onclick="createRide('Mini')">Create Mini Ride</button>
+    <button onclick="createRide('Sedan')">Create Sedan Ride</button>
+    <button onclick="createRide('SUV')">Create SUV Ride</button>
+    <button onclick="createRide('Auto')">Create Auto Ride</button>
+
+    <div id="output">
+        <h2>Created Rides</h2>
+    </div>
+
+    <script>
+        // Factory function
+        function RideFactory() {
+            this.create = function (type) {
+                const id = generateUniqueId();
+                switch (type) {
+                    case 'Mini':
+                        return { type: 'Mini', capacity: 3, farePerKm: 5, id: id };
+                    case 'Sedan':
+                        return { type: 'Sedan', capacity: 4, farePerKm: 8, id: id };
+                    case 'SUV':
+                        return { type: 'SUV', capacity: 6, farePerKm: 12, id: id };
+                    case 'Auto':
+                        return { type: 'Auto', capacity: 2, farePerKm: 3, id: id };
+                    default:
+                        return null;
+                }
+            };
+        }
+
+        const factory = new RideFactory();
+
+        function generateUniqueId() {
+            return 'RIDE-' + Math.floor(Math.random() * 10000);
+        }
+
+        function createRide(type) {
+            const ride = factory.create(type);
+            displayRide(ride);
+        }
+
+        function displayRide(ride) {
+            const outputDiv = document.getElementById('output');
+            const div = document.createElement('div');
+            div.className = 'ride-item';
+            div.textContent = `Type: ${ride.type} | Capacity: ${ride.capacity} | Fare per Km: $${ride.farePerKm} | ID: ${ride.id}`;
+            outputDiv.appendChild(div);
+        }
+    </script>
+</body>
+
+</html>
